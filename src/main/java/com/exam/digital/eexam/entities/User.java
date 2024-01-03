@@ -12,10 +12,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+    private String userName;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String email;
+    private String password;
     private String about;
     private Boolean isEnabled = true;
     private String profile;
@@ -27,15 +29,34 @@ public class User {
     public User() {
     }
 
-    public User(Long userId, String firstName, String lastName, String phoneNumber, String email, String about, Boolean isEnabled, String profile) {
+    public User(Long userId, String userName, String firstName, String lastName, String phoneNumber, String email, String password, String about, Boolean isEnabled, String profile, Set<UserRole> userRoles) {
         this.userId = userId;
+        this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.password = password;
         this.about = about;
         this.isEnabled = isEnabled;
         this.profile = profile;
+        this.userRoles = userRoles;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Set<UserRole> getUserRoles() {
