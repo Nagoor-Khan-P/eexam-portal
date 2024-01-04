@@ -9,8 +9,11 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
+@CrossOrigin("*")
 @Api(tags = "User API", description = "Operations related to managing users")
 public class UserController {
 
@@ -50,11 +53,21 @@ public class UserController {
     @ApiOperation(value = "Update User", notes = "Update user details", response = User.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated user"),
-            @ApiResponse(code = 404, message = "Not able to create a user")
+            @ApiResponse(code = 404, message = "Not able to update a user")
     })
     @PatchMapping("/update")
     public User updateUser(@RequestBody User user) {
         return userService.updateUser(user);
+    }
+
+    @ApiOperation(value = "Fetch All Users", notes = "Fetch all users details", response = User.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully returns users list"),
+            @ApiResponse(code = 404, message = "Not able to return users list")
+    })
+    @RequestMapping("/fetchAll")
+    public List<User> fetchAllUsers() {
+        return userService.fetchAllUsers();
     }
 
 }

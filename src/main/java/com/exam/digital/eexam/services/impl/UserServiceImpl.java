@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,12 +24,9 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
     @Override
     public User createUser(User user) throws Exception {
-        if(user.getUserId() != null) {
-            Optional<User> currentUser = userRepository.findById(user.getUserId());
-            if (currentUser.isPresent()) {
-                //User is already present
-                throw new Exception("User already present");
-            }
+        User currentUser = userRepository.findByUserName(user.getUserName());
+        if(currentUser != null) {
+            throw new Exception("User already present");
         } else {
             // add roles
             Set<UserRole> userRoleSet = new HashSet<>();
@@ -63,6 +61,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> fetchAllUsers() {
+        return userRepository.findAll();
     }
 
 
